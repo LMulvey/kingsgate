@@ -1,0 +1,15 @@
+*,
+body {
+  box-sizing: inherit;
+}
+
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background-color: rgba(52, 67, 105, 0.3);
+}
