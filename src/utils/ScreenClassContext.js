@@ -10,7 +10,7 @@ export const isSm = screenClass => screenClass === 'sm';
 export const isXs = screenClass => screenClass === 'xs';
 
 export const isLessThanXl = screenClass =>
-  ['sm', 'md', 'lg'].includes(screenClass);
+  ['xs', 'sm', 'md', 'lg'].includes(screenClass);
 export const isLessThanLg = screenClass =>
   ['xs', 'sm', 'md'].includes(screenClass);
 export const isLessThanMd = screenClass => ['xs', 'sm'].includes(screenClass);
@@ -25,7 +25,6 @@ const getViewPort = () => {
 
 const getScreenClass = () => {
   let screenClass = 'xl';
-
   const viewport = getViewPort();
   if (viewport) {
     screenClass = 'xs';
@@ -49,6 +48,7 @@ export default class ScreenClassProvider extends Component {
   }
 
   componentDidMount() {
+    this.handleResize();
     window.addEventListener('resize', this.handleResize);
   }
 
@@ -59,6 +59,7 @@ export default class ScreenClassProvider extends Component {
   handleResize() {
     const { stateScreenClass } = this.state;
     const screenClass = getScreenClass();
+    console.log('hello');
     if (stateScreenClass !== screenClass) {
       this.setState({ stateScreenClass: screenClass });
     }

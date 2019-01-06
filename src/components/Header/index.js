@@ -2,22 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Navbar from './Navbar';
 import Subbar from './Subbar';
+import Mobile from './Mobile';
+
 import {
   ScreenClassContext,
   isLessThanLg,
 } from '../../utils/ScreenClassContext';
 
-const Header = ({ siteTitle }) => (
+const Header = () => (
   <ScreenClassContext.Consumer>
     {screenClass => {
-      console.log('Hey!', screenClass);
       return !isLessThanLg(screenClass) ? (
         <>
           <Navbar />
           <Subbar />
         </>
       ) : (
-        'mobile?'
+        <Mobile />
       );
     }}
   </ScreenClassContext.Consumer>

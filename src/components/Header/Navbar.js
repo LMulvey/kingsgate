@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link, StaticQuery, graphql } from 'gatsby';
-import { Button, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 import media from 'styled-media-query';
+
+import BookAnAppointment from './BookAnAppointment';
 import KingsgateLogo from '../../images/kingsgate-logo.png';
 
-const ROOT_URL_QUERY = graphql`
+export const ROOT_URL_QUERY = graphql`
   query ROOT_URL_QUERY {
     site {
       siteMetadata {
@@ -38,17 +39,6 @@ const RightNav = styled.div`
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  &&& button {
-    height: 40px;
-    background-color: ${props => props.theme.orange};
-    color: white;
-    transition: background 125ms ease-out;
-    flex-shrink: 0;
-    ${media.lessThan('1100px')`font-size: 14px;`};
-    &:hover {
-      background-color: rgba(235, 165, 0);
-    }
-  }
 `;
 
 const StyledLinksContainer = styled.ul`
@@ -115,8 +105,11 @@ const Navbar = () => {
         },
       }) => (
         <NavbarContainer>
-          <a href={rootUrl} style={{ margin: 0 }}>
-            <StyledLogo src={KingsgateLogo} alt="Kingsgate Automotive" />
+          <a href={rootUrl}>
+            <StyledLogo
+              src={KingsgateLogo}
+              alt="Kingsgate Automotive | Automotive Repair, Edmonton, Alberta"
+            />
           </a>
           <RightNav>
             <StyledLinksContainer>
@@ -133,10 +126,7 @@ const Navbar = () => {
                 <a>Be Car Care Aware</a>
               </StyledLink>
             </StyledLinksContainer>
-            <Button icon labelPosition="right">
-              Book an Appointment
-              <Icon name="calendar plus" />
-            </Button>
+            <BookAnAppointment />
           </RightNav>
         </NavbarContainer>
       )}

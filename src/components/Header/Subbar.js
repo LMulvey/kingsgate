@@ -9,7 +9,7 @@ import {
   resolveStatusString,
 } from '../../utils/hoursHelper';
 
-const MESSAGES_QUERY = graphql`
+export const MESSAGES_QUERY = graphql`
   query MESSAGES_QUERY {
     allPrismicGlobalSettings {
       edges {

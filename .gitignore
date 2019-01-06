@@ -71,3 +71,6 @@ yarn-error.log
 
 # Static
 static
+
+# npmrc - contains FA token
+.npmrc

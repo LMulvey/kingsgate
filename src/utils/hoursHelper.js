@@ -12,20 +12,20 @@ const CURR_WEEK = CURR_DATE.week();
 
 const holidays = {
   /** Static Holidays */
-  CHRISTMAS: moment(`12/25/${CURR_DATE.year()}`),
-  BOXING_DAY: moment(`12/26/${CURR_DATE.year()}`),
-  NEW_YEARS_DAY: moment(`1/1/${CURR_DATE.year()}`),
-  CANADA_DAY: moment(`7/1/${CURR_DATE.year()}`),
+  CHRISTMAS: moment(`${CURR_DATE.year()}-12-25`),
+  BOXING_DAY: moment(`${CURR_DATE.year()}-12-26`),
+  NEW_YEARS_DAY: moment(`${CURR_DATE.year()}-01-01`),
+  CANADA_DAY: moment(`${CURR_DATE.year()}-07-01`),
 
   /** Variable Date Holidays (UPDATE THESE) */
-  MAY_LONG: moment('5/20/2019'),
-  GOOD_FRIDAY: moment('4/19/2019'),
-  EASTER_MONDAY: moment('4/22/2019'),
-  AUGUST_LONG: moment('8/5/2019'),
-  FRIDAY_AUGUST_LONG: moment('8/2/2019'),
-  LABOUR_DAY: moment('9/2/2019'),
-  THANKSGIVING: moment('10/14/2019'),
-  REMEMBERANCE_DAY: moment('11/11/2019'),
+  MAY_LONG: moment('2019-05-20'),
+  GOOD_FRIDAY: moment('2019-04-19'),
+  EASTER_MONDAY: moment('2019-04-22'),
+  FRIDAY_AUGUST_LONG: moment('2019-08-02'),
+  AUGUST_LONG: moment('2019-08-05'),
+  LABOUR_DAY: moment('2019-09-02'),
+  THANKSGIVING: moment('2019-10-14'),
+  REMEMBERANCE_DAY: moment('2019-11-11'),
 };
 
 const isHoliday = Object.keys(holidays).some(day =>
@@ -34,8 +34,8 @@ const isHoliday = Object.keys(holidays).some(day =>
 
 /** Booleans */
 const isLimitedAvailablity = CURR_WEEK === holidays.CHRISTMAS.week();
-const OPEN_TIME = moment(`${CURR_DATE.format('YYYY/MM/DD')} 08:00`);
-const CLOSE_TIME = moment(`${CURR_DATE.format('YYYY/MM/DD')} 17:00`);
+const OPEN_TIME = moment(`${CURR_DATE.format('YYYY-MM-DD')} 08:00`);
+const CLOSE_TIME = moment(`${CURR_DATE.format('YYYY-MM-DD')} 17:00`);
 const isWeekday = CURR_DATE.day() > 0 && CURR_DATE.day() < 6;
 const isOpen = isWeekday && CURR_DATE.isBetween(OPEN_TIME, CLOSE_TIME);
 
