@@ -26,6 +26,7 @@ const getViewPort = () => {
 const getScreenClass = () => {
   let screenClass = 'xl';
   const viewport = getViewPort();
+
   if (viewport) {
     screenClass = 'xs';
     if (breakpoints[0] && viewport >= breakpoints[0]) screenClass = 'sm';
@@ -59,7 +60,7 @@ export default class ScreenClassProvider extends Component {
   handleResize() {
     const { stateScreenClass } = this.state;
     const screenClass = getScreenClass();
-    console.log('hello');
+
     if (stateScreenClass !== screenClass) {
       this.setState({ stateScreenClass: screenClass });
     }

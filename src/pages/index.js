@@ -1,26 +1,25 @@
 import React from 'react';
-import { Link, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 
 import { allPrismicHomepageShape } from '../gql/shapes';
 import Layout from '../components/layout';
 import { Container, Row, Col } from 'react-grid-system';
-import Image from '../components/image';
 import SEO from '../components/seo';
 
 const IndexPage = ({ data: { allPrismicHomepage } }) => {
   const {
     hero_image,
-    tagline_hero,
     section_1_title,
     section_1_blurb,
-    section_1_highlight_1,
-    section_1_highlight_2,
-    section_1_highlight_3,
-    section_2_title,
-    section_2_blurb,
-    section_2_highlight_1,
-    section_2_highlight_2,
-    section_2_highlight_3,
+    // tagline_hero,
+    // section_1_highlight_1,
+    // section_1_highlight_2,
+    // section_1_highlight_3,
+    // section_2_title,
+    // section_2_blurb,
+    // section_2_highlight_1,
+    // section_2_highlight_2,
+    // section_2_highlight_3,
   } = allPrismicHomepage.edges[0].node.data;
   return (
     <Layout>

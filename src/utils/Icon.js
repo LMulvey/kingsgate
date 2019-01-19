@@ -7,6 +7,7 @@ import {
   faTemperatureLow,
   faEngineWarning,
 } from '@fortawesome/pro-regular-svg-icons';
+
 library.add(
   faTireFlat,
   faBolt,

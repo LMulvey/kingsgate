@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, StaticQuery, graphql } from 'gatsby';
+import { StaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 import media from 'styled-media-query';
 
@@ -114,16 +114,16 @@ const Navbar = () => {
           <RightNav>
             <StyledLinksContainer>
               <StyledLink>
-                <a>Home</a>
+                <a href="/">Home</a>
               </StyledLink>
               <StyledLink>
-                <a>Services</a>
+                <a href="/services">Services</a>
               </StyledLink>
               <StyledLink>
-                <a>About</a>
+                <a href="/about">About</a>
               </StyledLink>
               <StyledLink large>
-                <a>Be Car Care Aware</a>
+                <a href="/carcare">Be Car Care Aware</a>
               </StyledLink>
             </StyledLinksContainer>
             <BookAnAppointment />

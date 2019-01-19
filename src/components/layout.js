@@ -8,6 +8,7 @@ import Header from './Header';
 import ScreenClassProvider from '../utils/ScreenClassContext';
 import 'semantic-ui-css/semantic.min.css';
 import './layout.css';
+import 'react-day-picker/lib/style.css';
 
 const Layout = ({ children }) => (
   <ThemeProvider theme={colors}>

@@ -28,9 +28,23 @@ const holidays = {
   REMEMBERANCE_DAY: moment('2019-11-11'),
 };
 
-const isHoliday = Object.keys(holidays).some(day =>
-  isSameDay(holidays[day], CURR_DATE)
-);
+export const isHoliday = day => {
+  if (!(day instanceof moment)) {
+    day = moment(day);
+  }
+
+  return Object.keys(holidays).some(holiday =>
+    isSameDay(holidays[holiday], day)
+  );
+};
+
+export const hasPassed = day => {
+  if (!(day instanceof moment)) {
+    day = moment(day);
+  }
+
+  return moment() > day;
+};
 
 /** Booleans */
 const isLimitedAvailablity = CURR_WEEK === holidays.CHRISTMAS.week();
@@ -40,7 +54,7 @@ const isWeekday = CURR_DATE.day() > 0 && CURR_DATE.day() < 6;
 const isOpen = isWeekday && CURR_DATE.isBetween(OPEN_TIME, CLOSE_TIME);
 
 /** Export */
-export const openStatus = resolveStatus();
+export const openStatus = resolveStatus(CURR_DATE);
 
 export function resolveStatusColor({ theme, openStatus }) {
   switch (openStatus) {
@@ -78,9 +92,9 @@ function isSameDay(a, b) {
   );
 }
 
-function resolveStatus() {
+function resolveStatus(theDay) {
   if (isLimitedAvailablity) return LIMITED_AVAILABILITY;
-  if (isHoliday) return STAT_HOLIDAY;
+  if (isHoliday(theDay)) return STAT_HOLIDAY;
   if (isOpen) return SHOP_OPEN;
   return SHOP_CLOSED;
 }

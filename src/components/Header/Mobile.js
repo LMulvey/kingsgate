@@ -1,5 +1,5 @@
 import React from 'react';
-import { StaticQuery, graphql } from 'gatsby';
+import { StaticQuery } from 'gatsby';
 import styled from 'styled-components';
 import { Icon, List } from 'semantic-ui-react';
 import { Container, Col, Row } from 'react-grid-system';
@@ -150,7 +150,6 @@ const StyledListItem = styled(List.Item)`
 
 function handleArrowClick() {
   if (window) {
-    console.log('hello window', window.innerHeight);
     window.scroll({
       top: window.innerHeight,
       behavior: 'smooth',

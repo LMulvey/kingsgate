@@ -22,7 +22,7 @@
     "moment": "^2.23.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
-    "react-dates": "^18.3.1",
+    "react-day-picker": "^7.2.4",
     "react-dom": "^16.6.3",
     "react-grid-system": "^4.3.1",
     "react-helmet": "^5.2.0",
