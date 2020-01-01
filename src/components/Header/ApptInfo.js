@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactInputMask from 'react-input-mask';
 import styled from 'styled-components';
 import { Form, Input, Button, Search, Label } from 'semantic-ui-react';
 
@@ -59,10 +60,7 @@ class ApptInfo extends Component {
       position,
       onClickNextSteps,
     } = this.props;
-    const resultRenderer = item => {
-      console.log(item);
-      return <Label content={item.title} />;
-    };
+    const resultRenderer = item => <Label content={item.title} />;
     const fieldsFilledOut = fullName && phoneNumber && email && reason;
 
     return (
@@ -77,14 +75,21 @@ class ApptInfo extends Component {
               value={fullName}
               onChange={onChangeField}
             />
-            <Form.Field
-              control={Input}
-              label="Phone Number"
-              name="phoneNumber"
-              placeholder="xxx-xxx-xxxx"
+            <ReactInputMask
+              mask="(999) 999-9999"
               value={phoneNumber}
               onChange={onChangeField}
-            />
+            >
+              {inputProps => (
+                <Form.Field
+                  {...inputProps}
+                  control={Input}
+                  label="Phone Number"
+                  name="phoneNumber"
+                  placeholder="xxx-xxx-xxxx"
+                />
+              )}
+            </ReactInputMask>
             <Form.Field
               control={Input}
               label="Email"
@@ -93,15 +98,11 @@ class ApptInfo extends Component {
               value={email}
               onChange={onChangeField}
             />
-            {/* <Form.Field
-              control={Input}
-              label="Reason for Appointment"
-              name="reason"
-              placeholder="Describe the issue you're having"
-              value={reason}
-              onChange={onChangeField}
-            /> */}
-            <Search
+
+            <Form.Field
+              control={Search}
+              input={{ icon: 'search', iconPosition: 'left' }}
+              label="Reason"
               name="reason"
               noResultsMessage="Specifying another reason..."
               onResultSelect={this.handleResultSelect}

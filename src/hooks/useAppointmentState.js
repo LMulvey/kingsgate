@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export function useAppointmentState({ defaultUserMessage = '' }) {
   const [pickerOpen, setPickerOpen] = useState(false);
-  const [pickerStage, setPickerStage] = useState(1);
+  const [pickerStage, setPickerStage] = useState(2);
   const [selectedDay, setSelectedDay] = useState(undefined);
   const [selectedTime, setSelectedTime] = useState('');
   const [fullName, setFullName] = useState('');

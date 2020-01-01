@@ -5,6 +5,10 @@ const messagesQuery = graphql`
   query PrismicMessagesQuery {
     prismicGlobalSettings {
       data {
+        messages_appointment_review_message {
+          html
+          text
+        }
         messages_appointment_default_cta {
           text
           html

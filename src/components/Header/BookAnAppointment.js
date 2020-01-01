@@ -95,9 +95,8 @@ export default function BookAnAppointment() {
 
   const togglePicker = () => state.setPickerOpen(prev => !prev);
   const onChangeSelectedTime = (_, { value }) => state.setSelectedTime(value);
-  const onClickBack = () => state.setPickerStage(prev => prev.pickerStage - 1);
-  const onClickNextSteps = () =>
-    state.setPickerStage(prev => prev.pickerStage + 1);
+  const onClickBack = () => state.setPickerStage(prev => prev - 1);
+  const onClickNextSteps = () => state.setPickerStage(prev => prev + 1);
   const onChangeField = ({ target: { name, value } }) => {
     const titleCaseField = name.charAt(0).toUpperCase() + name.substr(1);
     state[`set${titleCaseField}`](value);
@@ -118,12 +117,7 @@ export default function BookAnAppointment() {
 
   return (
     <div style={{ position: 'relative' }}>
-      <Dimmer
-        active={state.pickerOpen}
-        blurring
-        onClickOutside={togglePicker}
-        page
-      />
+      <Dimmer active={state.pickerOpen} onClickOutside={togglePicker} page />
       <StyledButton icon labelPosition="right" onClick={togglePicker}>
         Book an Appointment
         <Icon name="calendar plus" />
