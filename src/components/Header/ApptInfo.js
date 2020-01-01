@@ -63,8 +63,8 @@ class ApptInfo extends Component {
       console.log(item);
       return <Label content={item.title} />;
     };
-
     const fieldsFilledOut = fullName && phoneNumber && email && reason;
+
     return (
       <StageContainer position={position}>
         <FormContainer>

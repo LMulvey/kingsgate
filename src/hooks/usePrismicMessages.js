@@ -1,4 +1,5 @@
 import { useStaticQuery, graphql } from 'gatsby';
+import { createSafeObject } from '../helpers/createSafeObject';
 
 const messagesQuery = graphql`
   query PrismicMessagesQuery {
@@ -44,6 +45,10 @@ function trimMessageKeys(messagesObj) {
 export function useMessages() {
   const data = useStaticQuery(messagesQuery);
   const messages = data.prismicGlobalSettings.data;
-  const cleanMessagesObject = flattenMessageKeys(messages);
-  return cleanMessagesObject;
+  const cleanMessagesObject = trimMessageKeys(messages);
+  const safeMessagesObject = createSafeObject(
+    cleanMessagesObject,
+    'Invalid Message Key'
+  );
+  return safeMessagesObject;
 }

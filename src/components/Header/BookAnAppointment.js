@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Button, Icon, Dimmer } from 'semantic-ui-react';
 import { media } from '../../utils';
@@ -6,10 +6,8 @@ import { media } from '../../utils';
 import ApptInfo from './ApptInfo';
 import DayPicker from './DayPicker';
 import ReviewInfo from './ReviewInfo';
-
-const DEFAULT_MESSAGE = 'Select a day above ↑';
-const HOLIDAY_MESSAGE =
-  'You selected a holiday or weekend. Please call us for up-to-date availability.';
+import { useMessages } from '../../hooks/usePrismicMessages';
+import { useAppointmentState } from '../../hooks/useAppointmentState';
 
 const positions = {
   visible: `transform: translateX(0);`,
@@ -87,115 +85,86 @@ const BackButton = styled.a`
   }
 `;
 
-class BookAnAppointment extends Component {
-  state = {
-    pickerOpen: false,
-    pickerStage: 1,
-    selectedDay: undefined,
-    selectedTime: '',
-    fullName: '',
-    phoneNumber: '',
-    email: '',
-    reason: '',
-    errorMessage: DEFAULT_MESSAGE,
+export default function BookAnAppointment() {
+  const messages = useMessages();
+  const HOLIDAY_MESSAGE = messages.appointment_holiday.text;
+  const DEFAULT_MESSAGE = messages.appointment_default_cta.text;
+  const state = useAppointmentState(DEFAULT_MESSAGE);
+  const isStage = pos =>
+    state.pickerStage === pos ? positions.visible : positions.hidden;
+
+  const togglePicker = () => state.setPickerOpen(prev => !prev);
+  const onChangeSelectedTime = (_, { value }) => state.setSelectedTime(value);
+  const onClickBack = () => state.setPickerStage(prev => prev.pickerStage - 1);
+  const onClickNextSteps = () =>
+    state.setPickerStage(prev => prev.pickerStage + 1);
+  const onChangeField = ({ target: { name, value } }) => {
+    const titleCaseField = name.charAt(0).toUpperCase() + name.substr(1);
+    state[`set${titleCaseField}`](value);
   };
+  const handleDayClick = (day, opts) => {
+    const { selected, disabled, isHoliday, hasPassed } = opts;
+    const isInvalid = hasPassed || isHoliday || selected;
+    const userMessage = isHoliday ? HOLIDAY_MESSAGE : DEFAULT_MESSAGE;
+    const selectedDay = isInvalid ? undefined : day;
 
-  togglePicker = () =>
-    this.setState(prev => ({
-      pickerOpen: !prev.pickerOpen,
-    }));
-
-  onChangeField = ({ target: { name, value } }) =>
-    this.setState({ [name]: value });
-    
-  onChangeSelectedTime = (_, { name, value }) => {
-    this.setState({ selectedTime: value });
-  };
-
-  handleDayClick = (day, { selected, disabled, isHoliday, hasPassed }) => {
     if (disabled) {
       return false;
     }
 
-    const isInvalid = hasPassed || isHoliday || selected;
-    const errorMessage = isHoliday ? HOLIDAY_MESSAGE : DEFAULT_MESSAGE;
-    const selectedDay = isInvalid ? undefined : day;
-    this.setState({ selectedDay, errorMessage });
+    state.setSelectedDay(selectedDay);
+    state.setUserMessage(userMessage);
   };
 
-  onClickNextSteps = () =>
-    this.setState(prev => ({ pickerStage: prev.pickerStage + 1 }));
-
-  onClickBack = () =>
-    this.setState(prev => ({ pickerStage: prev.pickerStage - 1 }));
-
-  render() {
-    const {
-      pickerOpen,
-      fullName,
-      phoneNumber,
-      email,
-      reason,
-      selectedDay,
-      selectedTime,
-      pickerStage,
-      errorMessage,
-    } = this.state;
-    const isStage = pos =>
-      pickerStage === pos ? positions.visible : positions.hidden;
-
-    return (
-      <div style={{ position: 'relative' }}>
-        <Dimmer
-          active={pickerOpen}
-          blurring
-          onClickOutside={this.togglePicker}
-          page
-        />
-        <StyledButton icon labelPosition="right" onClick={this.togglePicker}>
-          Book an Appointment
-          <Icon name="calendar plus" />
-        </StyledButton>
-        <PopupContainer open={pickerOpen}>
-          {pickerStage > 1 && (
-            <BackButton onClick={this.onClickBack}>← Back</BackButton>
-          )}
-          <CloseButton onClick={this.togglePicker}>&times;</CloseButton>
-          <OverflowContainer pickerStage={pickerStage}>
-            <DayPicker
-              position={isStage(1)}
-              selectedDay={selectedDay}
-              selectedTime={selectedTime}
-              handleDayClick={this.handleDayClick}
-              onChangeSelectedTime={this.onChangeSelectedTime}
-              closePicker={this.togglePicker}
-              onClickNextSteps={this.onClickNextSteps}
-              message={errorMessage}
-            />
-            <ApptInfo
-              onClickNextSteps={this.onClickNextSteps}
-              position={isStage(2)}
-              onChangeField={this.onChangeField}
-              fullName={fullName}
-              phoneNumber={phoneNumber}
-              email={email}
-              reason={reason}
-            />
-            <ReviewInfo
-              position={isStage(3)}
-              fullName={fullName}
-              phoneNumber={phoneNumber}
-              email={email}
-              reason={reason}
-              selectedDay={selectedDay}
-              selectedTime={selectedTime}
-              togglePicker={this.togglePicker}
-            />
-          </OverflowContainer>
-        </PopupContainer>
-      </div>
-    );
-  }
+  return (
+    <div style={{ position: 'relative' }}>
+      <Dimmer
+        active={state.pickerOpen}
+        blurring
+        onClickOutside={togglePicker}
+        page
+      />
+      <StyledButton icon labelPosition="right" onClick={togglePicker}>
+        Book an Appointment
+        <Icon name="calendar plus" />
+      </StyledButton>
+      <PopupContainer open={state.pickerOpen}>
+        {state.pickerStage > 1 && (
+          <BackButton onClick={onClickBack}>← Back</BackButton>
+        )}
+        <CloseButton onClick={togglePicker}>&times;</CloseButton>
+        <OverflowContainer pickerStage={state.pickerStage}>
+          <DayPicker
+            position={isStage(1)}
+            selectedDay={state.selectedDay}
+            selectedTime={state.selectedTime}
+            handleDayClick={handleDayClick}
+            onChangeSelectedTime={onChangeSelectedTime}
+            closePicker={togglePicker}
+            onClickNextSteps={onClickNextSteps}
+            message={state.userMessage}
+          />
+          <ApptInfo
+            onClickNextSteps={onClickNextSteps}
+            position={isStage(2)}
+            onChangeField={onChangeField}
+            fullName={state.fullName}
+            phoneNumber={state.phoneNumber}
+            email={state.email}
+            reason={state.reason}
+          />
+          <ReviewInfo
+            position={isStage(3)}
+            fullName={state.fullName}
+            phoneNumber={state.phoneNumber}
+            email={state.email}
+            reason={state.reason}
+            selectedDay={state.selectedDay}
+            selectedTime={state.selectedTime}
+            togglePicker={togglePicker}
+          />
+        </OverflowContainer>
+      </PopupContainer>
+    </div>
+  );
 }
-
-export default BookAnAppointment;

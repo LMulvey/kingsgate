@@ -74,3 +74,6 @@ static
 
 # npmrc - contains FA token
 .npmrc
+
+# VSCode
+.vscode
