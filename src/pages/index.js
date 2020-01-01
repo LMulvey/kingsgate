@@ -1,9 +1,9 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-
-import { allPrismicHomepageShape } from '../gql/shapes';
-import Layout from '../components/layout';
 import { Container, Row, Col } from 'react-grid-system';
+import { ToastProvider } from 'react-toast-notifications';
+
+import Layout from '../components/layout';
 import SEO from '../components/seo';
 
 const IndexPage = ({ data: { allPrismicHomepage } }) => {
@@ -22,6 +22,7 @@ const IndexPage = ({ data: { allPrismicHomepage } }) => {
     // section_2_highlight_3,
   } = allPrismicHomepage.edges[0].node.data;
   return (
+    <ToastProvider>
     <Layout>
       <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
       <Container fluid style={{ padding: 0 }}>
@@ -38,11 +39,8 @@ const IndexPage = ({ data: { allPrismicHomepage } }) => {
         </Row>
       </Container>
     </Layout>
+    </ToastProvider>
   );
-};
-
-IndexPage.propTypes = {
-  data: allPrismicHomepageShape,
 };
 
 export const HOMEPAGE_QUERY = graphql`

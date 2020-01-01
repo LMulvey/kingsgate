@@ -9,7 +9,7 @@ import ReviewInfo from './ReviewInfo';
 
 const DEFAULT_MESSAGE = 'Select a day above ↑';
 const HOLIDAY_MESSAGE =
-  'You selected a holiday. Please call us for up-to-date availability.';
+  'You selected a holiday or weekend. Please call us for up-to-date availability.';
 
 const positions = {
   visible: `transform: translateX(0);`,
@@ -107,7 +107,7 @@ class BookAnAppointment extends Component {
 
   onChangeField = ({ target: { name, value } }) =>
     this.setState({ [name]: value });
-
+    
   onChangeSelectedTime = (_, { name, value }) => {
     this.setState({ selectedTime: value });
   };
@@ -117,22 +117,10 @@ class BookAnAppointment extends Component {
       return false;
     }
 
-    if (hasPassed) {
-      this.setState({ selectedDay: undefined });
-      return;
-    }
-
-    if (isHoliday) {
-      this.setState({ selectedDay: undefined, message: HOLIDAY_MESSAGE });
-      return;
-    }
-
-    if (selected) {
-      this.setState({ selectedDay: undefined, message: DEFAULT_MESSAGE });
-      return;
-    }
-
-    this.setState({ selectedDay: day, message: DEFAULT_MESSAGE });
+    const isInvalid = hasPassed || isHoliday || selected;
+    const errorMessage = isHoliday ? HOLIDAY_MESSAGE : DEFAULT_MESSAGE;
+    const selectedDay = isInvalid ? undefined : day;
+    this.setState({ selectedDay, errorMessage });
   };
 
   onClickNextSteps = () =>
@@ -201,6 +189,7 @@ class BookAnAppointment extends Component {
               reason={reason}
               selectedDay={selectedDay}
               selectedTime={selectedTime}
+              togglePicker={this.togglePicker}
             />
           </OverflowContainer>
         </PopupContainer>
