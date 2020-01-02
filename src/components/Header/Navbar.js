@@ -3,7 +3,7 @@ import { StaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 import media from 'styled-media-query';
 
-import BookAnAppointment from './BookAnAppointment';
+import BookAnAppointment from '../BookAnAppointment';
 import KingsgateLogo from '../../images/kingsgate-logo.png';
 
 export const ROOT_URL_QUERY = graphql`

@@ -40,7 +40,7 @@ class ApptInfo extends Component {
   handleSearchChange = (e, { value }) => {
     e.persist();
     const filtered =
-      value.length > 2
+      value.length > 1
         ? autocompleteValues.filter(val =>
             val.title.toLowerCase().includes(value.toLowerCase())
           )
@@ -60,7 +60,7 @@ class ApptInfo extends Component {
       position,
       onClickNextSteps,
     } = this.props;
-    const resultRenderer = item => <Label content={item.title} />;
+    const resultRenderer = item => <h5 style={{ margin: 0 }}>{item.title}</h5>;
     const fieldsFilledOut = fullName && phoneNumber && email && reason;
 
     return (
@@ -87,6 +87,7 @@ class ApptInfo extends Component {
                   label="Phone Number"
                   name="phoneNumber"
                   placeholder="xxx-xxx-xxxx"
+                  required
                 />
               )}
             </ReactInputMask>
@@ -94,6 +95,7 @@ class ApptInfo extends Component {
               control={Input}
               label="Email"
               name="email"
+              required
               placeholder="eg: customer@kingsgateauto.com"
               value={email}
               onChange={onChangeField}
@@ -111,15 +113,16 @@ class ApptInfo extends Component {
               value={reason}
               resultRenderer={resultRenderer}
             />
+            <Button
+              type="submit"
+              color="teal"
+              content="Next Steps – Review Information"
+              icon="right arrow"
+              labelPosition="right"
+              disabled={!fieldsFilledOut}
+              onClick={onClickNextSteps}
+            />
           </Form>
-          <Button
-            color="teal"
-            content="Next Steps – Review Information"
-            icon="right arrow"
-            labelPosition="right"
-            disabled={!fieldsFilledOut}
-            onClick={onClickNextSteps}
-          />
         </FormContainer>
       </StageContainer>
     );

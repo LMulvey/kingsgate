@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Icon, List } from 'semantic-ui-react';
 import { Container, Col, Row } from 'react-grid-system';
 
-import BookAnAppointment from './BookAnAppointment';
+import BookAnAppointment from '../BookAnAppointment';
 import KingsgateLogo from '../../images/kingsgate-logo.png';
 import { ROOT_URL_QUERY } from './Navbar';
 import { MESSAGES_QUERY } from './Subbar';

@@ -32,9 +32,6 @@ const DayPicker = props => {
   const prettyDay = selectedDay
     ? moment(selectedDay).format('MMM DD, YYYY')
     : '';
-  const prettyTime = selectedTime
-    ? timeOptions.find(time => time.value === selectedTime)
-    : '';
 
   return (
     <StageContainer position={position}>
