@@ -90,7 +90,7 @@ const ReviewInfo = props => {
   });
 
   return (
-    <StageContainer position={position}>
+    <>
       <p
         style={{ marginTop: '25px' }}
         dangerouslySetInnerHTML={{ __html: reviewHTML }}
@@ -107,7 +107,7 @@ const ReviewInfo = props => {
       >
         Confirm
       </Button>
-    </StageContainer>
+    </>
   );
 };
 

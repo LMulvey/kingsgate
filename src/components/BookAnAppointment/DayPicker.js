@@ -15,8 +15,8 @@ const BottomContainer = styled.div`
 `;
 
 export const timeOptions = [
-  { key: 'eleven-am', text: '11:00am', value: '11' },
-  { key: 'one-pm', text: '1:00pm', value: '1' },
+  { key: 'eleven-am', text: '11:00am', value: '11:00' },
+  { key: 'one-pm', text: '1:00pm', value: '13:00' },
 ];
 
 const DayPicker = props => {
@@ -34,7 +34,7 @@ const DayPicker = props => {
     : '';
 
   return (
-    <StageContainer position={position}>
+    <>
       <ReactDayPicker
         onDayClick={handleDayClick}
         selectedDays={selectedDay}
@@ -57,22 +57,21 @@ const DayPicker = props => {
               />
             </Form.Group>
           </Form>
-          {selectedTime && (
-            <div style={{ width: '100%', flexBasis: '100%' }}>
-              <Button
-                color="teal"
-                content="Next Steps – Who's the appointment for?"
-                icon="right arrow"
-                labelPosition="right"
-                onClick={onClickNextSteps}
-              />
-            </div>
-          )}
+          <div style={{ width: '100%', flexBasis: '100%' }}>
+            <Button
+              disabled={!selectedTime}
+              color="teal"
+              content="Next Steps – Who's the appointment for?"
+              icon="right arrow"
+              labelPosition="right"
+              onClick={onClickNextSteps}
+            />
+          </div>
         </BottomContainer>
       ) : (
         <h4 style={{ textAlign: 'center' }}>{message}</h4>
       )}
-    </StageContainer>
+    </>
   );
 };
 

@@ -64,7 +64,7 @@ class ApptInfo extends Component {
     const fieldsFilledOut = fullName && phoneNumber && email && reason;
 
     return (
-      <StageContainer position={position}>
+      <>
         <FormContainer>
           <Form size="tiny" inverted>
             <Form.Field
@@ -124,7 +124,7 @@ class ApptInfo extends Component {
             />
           </Form>
         </FormContainer>
-      </StageContainer>
+      </>
     );
   }
 }

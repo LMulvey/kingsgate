@@ -1,9 +1,9 @@
 import React from 'react';
-import { StaticQuery, graphql } from 'gatsby';
+import { StaticQuery, graphql, navigate } from 'gatsby';
+import { Button, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 import media from 'styled-media-query';
 
-import BookAnAppointment from '../BookAnAppointment';
 import KingsgateLogo from '../../images/kingsgate-logo.png';
 
 export const ROOT_URL_QUERY = graphql`
@@ -12,6 +12,21 @@ export const ROOT_URL_QUERY = graphql`
       siteMetadata {
         rootUrl
       }
+    }
+  }
+`;
+
+const StyledButton = styled(Button)`
+  &&& {
+    height: 40px;
+    background-color: ${props => props.theme.orange};
+    color: white;
+    transition: background 125ms ease-out;
+    flex-shrink: 0;
+    ${media.lessThan('1100px')`font-size: 14px;`};
+    ${media.lessThan('lg')`width: 100%;`};
+    &:hover {
+      background-color: rgba(235, 165, 0);
     }
   }
 `;
@@ -126,7 +141,14 @@ const Navbar = () => {
                 <a href="/carcare">Be Car Care Aware</a>
               </StyledLink>
             </StyledLinksContainer>
-            <BookAnAppointment />
+            <StyledButton
+              icon
+              labelPosition="right"
+              onClick={() => navigate('/book-an-appointment')}
+            >
+              Book an Appointment
+              <Icon name="calendar plus" />
+            </StyledButton>
           </RightNav>
         </NavbarContainer>
       )}

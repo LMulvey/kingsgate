@@ -1,10 +1,9 @@
 import React from 'react';
-import { StaticQuery } from 'gatsby';
+import { StaticQuery, navigate } from 'gatsby';
 import styled from 'styled-components';
-import { Icon, List } from 'semantic-ui-react';
+import { Button, Icon, List } from 'semantic-ui-react';
 import { Container, Col, Row } from 'react-grid-system';
 
-import BookAnAppointment from '../BookAnAppointment';
 import KingsgateLogo from '../../images/kingsgate-logo.png';
 import { ROOT_URL_QUERY } from './Navbar';
 import { MESSAGES_QUERY } from './Subbar';
@@ -148,6 +147,21 @@ const StyledListItem = styled(List.Item)`
   `};
 `;
 
+const StyledButton = styled(Button)`
+  &&& {
+    height: 40px;
+    background-color: ${props => props.theme.orange};
+    color: white;
+    transition: background 125ms ease-out;
+    flex-shrink: 0;
+    ${media.lessThan('1100px')`font-size: 14px;`};
+    ${media.lessThan('lg')`width: 100%;`};
+    &:hover {
+      background-color: rgba(235, 165, 0);
+    }
+  }
+`;
+
 function handleArrowClick() {
   if (window) {
     window.scroll({
@@ -191,7 +205,14 @@ const Mobile = () => {
               </WhiteLink>
             </Col>
             <MarginTopCol xs={12} sm={6} md={4} offset={{ md: 1 }} align="end">
-              <BookAnAppointment />
+              <StyledButton
+                icon
+                labelPosition="right"
+                onClick={() => navigate('/book-an-appointment')}
+              >
+                Book an Appointment
+                <Icon name="calendar plus" />
+              </StyledButton>
             </MarginTopCol>
           </Row>
           <Row>
